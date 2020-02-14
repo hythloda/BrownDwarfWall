@@ -1,0 +1,81 @@
+#!/bin/csh
+
+#script to run wall (i.e. "pared" in spanish)
+#17apr07: CE added additional coments to ones already made by NC
+
+set NAME='test'                #name for your runs
+#__________________________________________________________________
+#input for pared
+#star
+set MUI='0.5'             #cosine of inclination to line of sight; use 0.5 if unknown
+set MDOT='3e-9'          #mass accretion rate
+set ALPHA='0.01'          #viscosity parameter
+set NTAUMAX='500'         #points in optical depth grid; don't change
+
+set MSTAR='0.4'           #stellar mass in solar units
+set TSTAR='3720'          #stellar effective temperature
+set RSTAR='1.7'           #stellar radius in solar units
+set DISTANCIA='140'       #distance in pc
+
+
+
+
+
+
+set IEST='0'              #incluir estrella 1, extinguir=1 (necesita tau en entrada al final); i always leave this at 0
+set ALT='1'             #wall height in units of scale height H, it scales with H, so set to 1 
+
+#dust input
+set AMIN='0.005'          #minimum dust size
+set AMAX='.25'           #maximum dust size
+set P='3.5'               #exponent of size distribution
+
+#files with dust optical constants and code
+set DIREC=~/Desktop/wall_g77
+
+set WLFILE=longitudes_corto_ce    #wavelengths to calculate SED; make consistent with outer disk
+
+set FILSIL=olmg50.ric
+set FILESIL=$DIREC/$FILSIL
+set FILETROI=$DIREC/troilita.dat
+set FILEICE1=$DIREC/warren1984.dat
+set FILEICE2=$DIREC/warren1984.temp.dat
+
+#__________________________________________________________________
+#PROGRAMS
+set PARED=$DIREC/paredce
+
+#____________________________________________________________
+
+
+#wall at disk truncation radius
+
+$PARED << EOD
+5                                #number of input temperatures
+140., 130., 120., 110., 100.  #input temperatures; change this to move wall radius
+$MDOT $ALPHA $NTAUMAX
+$MSTAR $TSTAR $RSTAR
+$DISTANCIA
+$MUI
+$ALT
+$WLFILE
+$AMIN $AMAX $P
+$FILESIL
+$FILETROI
+$FILEICE1
+$FILEICE2
+$IEST
+EOD
+#output files
+\cp fort.17 fort17.ami$AMIN.amx$AMAX.p$P.$MUI.$NAME
+\cp fort.2 fort2.ami$AMIN.amx$AMAX.p$P.$MUI.$NAME
+echo fort17.ami$AMIN.amx$AMAX.p$P.$MUI.$NAME
+
+
+exit
+
+
+
+
+
+

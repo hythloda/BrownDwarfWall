@@ -1,0 +1,8 @@
+c.	block-data
+c	implicit double precision(a-h,o-z)
+	common /eledatdp/ abe(30),awe(30),xio01e(30),xio12e(30),u0e(30),
+     +u1e(30),u2e(30)
+	common /constantes/h,bk,cluz,pi,xme,ec,pia0,xnu01,xmh
+	common /constdos/au,pc,xmsol,xlsol,tmw,gn,sigs,rsol
+	common/sumab1/sumab
+

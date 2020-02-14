@@ -1,0 +1,12 @@
+27jun07 CE
+
+Do
+
+make 
+
+As a test to make sure it works do
+
+./job_walls
+
+It should output a fort17 and a fort2 file.  You will use the fort17 to plot.  Don't worry if you get -inf in the fort17 file, just replace it with -99 when plotting.
+You can change DIREC and WLFILE so this script can run in any directory.  Make sure WLFILE is set to the wavelength file you use for the outer disk.
